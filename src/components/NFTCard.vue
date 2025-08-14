@@ -45,7 +45,8 @@ import { useNFTBuy } from '../composables/useNFTBuy'
 const accountInfo = useAppKitAccount()
 const isConnected = computed(() => accountInfo.value.isConnected)
 
-const { NFTData, isLoading, buyNFT } = useNFTBuy()
+const { isLoading, buyNFT, getNFTData } = useNFTBuy()
+const NFTData = await getNFTData()
 
 const contractAddress = ref(NFTData.tokenAddress)
 const tokenId = ref(NFTData.tokenId)
