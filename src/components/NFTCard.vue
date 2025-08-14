@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useAppKitAccount } from '@reown/appkit/vue'
 import { useNFTBuy } from '../composables/useNFTBuy'
 
@@ -46,10 +46,16 @@ const accountInfo = useAppKitAccount()
 const isConnected = computed(() => accountInfo.value.isConnected)
 
 const { isLoading, buyNFT, getNFTData } = useNFTBuy()
-const NFTData = await getNFTData()
+const NFTData = (async () => await getNFTData())()
 
-const contractAddress = ref(NFTData.tokenAddress)
-const tokenId = ref(NFTData.tokenId)
+const contractAddress = ref('')
+const tokenId = ref('')
+
+onMounted(async () => {
+  const NFTData = await getNFTData()
+  contractAddress.value = NFTData?.tokenAddress ?? ''
+  tokenId.value = NFTData?.tokenId ?? ''
+})
 
 const handleBuy = async () => {
   await buyNFT({
