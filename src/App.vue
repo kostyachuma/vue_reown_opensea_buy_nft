@@ -3,7 +3,6 @@
   <div class="pages">
     <appkit-button />
     <NFTCard />
-    <InfoList />
    </div>
 </template>
 
@@ -56,22 +55,6 @@ export default {
   justify-content: center;
   gap: 20px;
   padding: 50px 0;
-}
-
-.nft-section {
-  margin: 40px 0;
-  text-align: center;
-}
-
-.nft-section h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #1a1a1a;
-}
-
-.nft-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+  min-height: 100vh;
 }
 </style>

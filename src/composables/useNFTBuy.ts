@@ -115,7 +115,7 @@ export function useNFTBuy() {
         side: 'ask' as any
       })
 
-      alert(order)
+      console.log('order', order)
 
       // Then fulfill the order
       const response = await sdk.fulfillOrder({

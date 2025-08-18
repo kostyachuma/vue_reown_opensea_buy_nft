@@ -1,7 +1,7 @@
 <template>
   <div class="nft-card">
     <div class="input-field">
-      <label for="contract-address">Адрес контракта:</label>
+      <label for="contract-address">Contract Address:</label>
       <input
         id="contract-address"
         v-model="contractAddress"
@@ -46,13 +46,13 @@ const accountInfo = useAppKitAccount()
 const isConnected = computed(() => accountInfo.value.isConnected)
 
 const { isLoading, buyNFT, getNFTData } = useNFTBuy()
-const NFTData = (async () => await getNFTData())()
 
 const contractAddress = ref('')
 const tokenId = ref('')
 
 onMounted(async () => {
   const NFTData = await getNFTData()
+
   contractAddress.value = NFTData?.tokenAddress ?? ''
   tokenId.value = NFTData?.tokenId ?? ''
 })

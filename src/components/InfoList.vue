@@ -1,35 +1,14 @@
 <template>
-    <section>
-      <h2>useAppKit</h2>
-      <pre>
-Address: {{ accountInfo.address }}
-caip Address: {{ accountInfo.caipAddress }}
-Connected: {{ accountInfo.isConnected }}
-Status: {{ accountInfo.status }}
-      </pre>
-    </section>
-
-    <section>
-      <h2>Theme</h2>
-      <pre>
-Theme: {{ kitTheme.themeMode }}
-      </pre>
-    </section>
-
-    <section>
-      <h2>State</h2>
-      <pre>
-open: {{ state.open }}
-selectedNetworkId: {{ state.selectedNetworkId }}
-      </pre>
-    </section>
-
-    <!-- <section>
-      <h2>WalletInfo</h2>
-      <pre>
-Name: {{ walletInfo?.name }}<br />
-      </pre>
-    </section> -->
+<pre class="info-list">
+<b>Account</b>
+{{ accountInfo }}
+<!-- <b>Wallet</b>
+{{ walletInfo }} -->
+<!-- <b>State</b>
+{{ state }} -->
+<!-- <b>Theme</b>
+{{ kitTheme }} -->
+</pre>
 </template>
   
 <script >
@@ -64,3 +43,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.info-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: left;
+  font-size: 8px;
+  color: red;
+  padding: 10px;
+}
+</style>
