@@ -8,18 +8,15 @@
 
 
 <script lang="ts">
-import {
-  createAppKit,
-} from '@reown/appkit/vue'
-import {ethersAdapter , networks, projectId } from './config/index'
+import { createAppKit } from '@reown/appkit/vue'
+import { ethersAdapter, solanaAdapter, networks, projectId } from './config/index'
 
 import ActionButtonList from "./components/ActionButton.vue"
-import InfoList from "./components/InfoList.vue";
 import NFTCard from "./components/NFTCard.vue";
 
 // Initialize AppKit
 createAppKit({
-  adapters: [ethersAdapter],
+  adapters: [ethersAdapter, solanaAdapter],
   networks,
   projectId,
   themeMode: 'light',
@@ -41,7 +38,6 @@ export default {
   name: "App",
   components: {
     ActionButtonList,
-    InfoList,
     NFTCard
   },
 };

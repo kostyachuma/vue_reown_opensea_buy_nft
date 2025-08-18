@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { useAppKit, useAppKitAccount } from '@reown/appkit/vue'
 import { Chain, OpenSeaSDK } from 'opensea-js'
 import { ethers } from 'ethers'
-import { mainnet, sepolia, bsc } from '@reown/appkit/networks'
+import { mainnet, sepolia, polygon } from '@reown/appkit/networks'
 
 export interface NFTData {
   tokenAddress: string
@@ -28,9 +28,9 @@ export function useNFTBuy() {
     tokenId: '4959',
   }
 
-  // BSC NFT data
-  const bscNFTData: NFTData = {
-    tokenAddress: '0x0000000000000000000000000000000000000000', // Replace with actual BSC NFT contract
+  // Polygon NFT data
+  const polygonNFTData: NFTData = {
+    tokenAddress: '0x0000000000000000000000000000000000000000', // Replace with actual Polygon NFT contract
     tokenId: '1',
   }
 
@@ -61,21 +61,21 @@ export function useNFTBuy() {
     return testnetChainIds.includes(chainId)
   }
 
-  // Check if current network is BSC
-  const isBSC = async () => {
+  // Check if current network is Polygon
+  const isPolygon = async () => {
     const chainId = await getCurrentNetwork()
     if (!chainId) return false
     
-    return chainId === BigInt(bsc.id) // 56
+    return chainId === BigInt(polygon.id) // 137
   }
 
   // Get appropriate NFT data based on network
   const getNFTData = async (): Promise<NFTData> => {
     const testnet = await isTestnet()
-    const bscNetwork = await isBSC()
+    const onPolygon = await isPolygon()
     
     if (testnet) return testnetNFTData
-    if (bscNetwork) return bscNFTData
+    if (onPolygon) return polygonNFTData
     return mainnetNFTData
   }
 
@@ -89,8 +89,16 @@ export function useNFTBuy() {
     const signer = await provider.getSigner()
 
     // Determine the chain based on current network
-    // Note: OpenSea SDK doesn't directly support BSC, so we'll use Mainnet as fallback
-    const chain = Chain.Mainnet
+    const chainId = await getCurrentNetwork()
+
+    const chains = {
+      [polygon.id]: Chain.Polygon,
+    }
+
+    let chain = Chain.Mainnet
+    if (chainId === BigInt(polygon.id)) {
+      chain = Chain.Polygon
+    }
 
     return new OpenSeaSDK(
       signer,
@@ -135,10 +143,10 @@ export function useNFTBuy() {
   return {
     testnetNFTData,
     mainnetNFTData,
-    bscNFTData,
+    polygonNFTData,
     getNFTData,
     isTestnet,
-    isBSC,
+    isPolygon,
     isLoading,
     buyNFT,
   }
