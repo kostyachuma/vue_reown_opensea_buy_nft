@@ -1,0 +1,41 @@
+---
+globs: "*.vue,*.ts,*.js"
+---
+
+# Vue 3 + TypeScript Standards
+
+## Component Setup
+```vue
+<script setup lang="ts">
+import { ref, computed, reactive } from 'vue'
+</script>
+```
+
+## State Management
+- `ref()` for primitives
+- `reactive()` for objects
+- `computed()` for derived state
+- Business logic in composables
+
+## Composables Pattern
+```typescript
+export function useFeatureName() {
+  const loading = ref(false)
+  
+  const actionFunction = async () => {
+    loading.value = true
+    try {
+      // logic
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  return { loading, actionFunction }
+}
+```
+
+## Error Handling
+- Wrap async operations in try-catch
+- Use loading states
+- Log errors to console

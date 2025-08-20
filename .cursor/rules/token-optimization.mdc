@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+---
+
+# Token Optimization Rules
+
+## Code Generation Guidelines
+- Provide minimal, focused code
+- Avoid verbose explanations unless critical
+- Use concise variable and function names
+- Prefer one-liners where possible
+- Don't create unnecessary functions or features
+- Only implement what's explicitly requested
+- Avoid over-engineering solutions
+
+## Response Format
+- Use bullet points instead of paragraphs
+- Show code, don't describe it extensively
+- Skip obvious comments in code blocks
+
+## Tool Usage Efficiency
+- Batch multiple file reads/edits in parallel
+- Use specific line ranges when reading large files
+- Combine related operations in single tool calls
+- Skip redundant file operations
+
+## Production Code Requirements
+- Generate production-ready code only
+- Use TypeScript types correctly
+- Follow established patterns from existing codebase
+
+## Communication Style
+- Direct answers without preambles
+- Use "✅" for confirmations instead of long sentences
+- Show working code immediately
+- Skip "Here's how..." or "Let me explain..." phrases

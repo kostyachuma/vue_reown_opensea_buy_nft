@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+
+# Reown Project Structure
+
+Vue 3 + TypeScript Web3 app with Reown AppKit and NFT marketplace.
+
+## Key Files
+- [src/App.vue](mdc:src/App.vue) - AppKit setup
+- [src/config/index.ts](mdc:src/config/index.ts) - Networks & adapters
+- [src/composables/useNFTBuy.ts](mdc:src/composables/useNFTBuy.ts) - NFT purchase logic
+
+## Required Environment Variables
+- `VITE_PROJECT_ID` - Reown project ID
+- `VITE_OPENSEA_API_KEY` - OpenSea API key
+
+## Patterns
+- Use `<script setup>` with Composition API
+- Business logic in composables
+- Reactive state with `ref()` and `reactive()`

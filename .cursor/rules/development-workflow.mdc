@@ -1,0 +1,32 @@
+---
+description: "Development workflow, environment setup, and debugging guidelines"
+---
+
+# Development Workflow
+
+## Environment Variables
+```bash
+VITE_PROJECT_ID=your_reown_project_id
+VITE_OPENSEA_API_KEY=your_opensea_api_key
+```
+
+## Scripts
+- `npm run dev` - Development server
+- `npm run build` - Production build
+- `npm run type-check` - TypeScript validation
+
+## Testing Strategy
+1. **Polygon** - Low gas costs
+2. **Mainnet** - Final testing
+
+## Debugging
+- Check wallet connection in console
+- Verify network IDs
+- Log OpenSea API responses
+- Monitor transactions in block explorers
+
+## Security
+- Never commit `.env` files
+- Test on testnets first
+- Validate user inputs
+- Use environment-specific API keys

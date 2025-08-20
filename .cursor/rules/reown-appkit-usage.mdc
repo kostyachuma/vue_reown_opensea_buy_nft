@@ -1,0 +1,45 @@
+---
+globs: "src/config/*.ts,src/App.vue,src/components/*Button*.vue"
+---
+
+# Reown AppKit Integration
+
+## AppKit Setup
+```typescript
+import { createAppKit } from '@reown/appkit/vue'
+import { ethersAdapter, solanaAdapter, networks, projectId } from './config/index'
+
+createAppKit({
+  adapters: [ethersAdapter, solanaAdapter],
+  networks,
+  projectId,
+  themeMode: 'light'
+})
+```
+
+## Vue Composables
+```typescript
+import { useAppKitAccount, useAppKit, useDisconnect } from '@reown/appkit/vue'
+
+const accountInfo = useAppKitAccount()
+const isConnected = computed(() => accountInfo.value.isConnected)
+const { open } = useAppKit()
+const { disconnect } = useDisconnect()
+```
+
+## Vite Config
+```typescript
+vue({
+  template: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['appkit-button'].includes(tag)
+    }
+  }
+})
+```
+
+## Environment
+```typescript
+export const projectId = import.meta.env.VITE_PROJECT_ID
+if (!projectId) throw new Error('VITE_PROJECT_ID is not set')
+```

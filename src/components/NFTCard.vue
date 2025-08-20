@@ -4,7 +4,7 @@
       <label for="contract-address">Contract Address:</label>
       <input
         id="contract-address"
-        v-model="contractAddress"
+        v-model="state.contractAddress"
         type="text"
         placeholder="0x..."
         class="nft-input"
@@ -15,7 +15,7 @@
       <label for="token-id">Token ID:</label>
       <input
         id="token-id"
-        v-model="tokenId"
+        v-model="state.tokenId"
         type="text"
         placeholder="123"
         class="nft-input"
@@ -38,31 +38,38 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
 import { useAppKitAccount } from '@reown/appkit/vue'
 import { useNFTBuy } from '../composables/useNFTBuy'
+import { mainnet, polygon } from '@reown/appkit/networks'
 
 const accountInfo = useAppKitAccount()
 const isConnected = computed(() => accountInfo.value.isConnected)
 
-const { isLoading, buyNFT, getNFTData } = useNFTBuy()
+const { isLoading, buyNFT, getCurrentNetwork } = useNFTBuy()
 
-const contractAddress = ref('')
-const tokenId = ref('')
-
-onMounted(async () => {
-  const NFTData = await getNFTData()
-
-  contractAddress.value = NFTData?.tokenAddress ?? ''
-  tokenId.value = NFTData?.tokenId ?? ''
+const state = reactive({
+  contractAddress: '0x579368942f7e63eb268405d2ae1d10504319ae81',
+  tokenId: '1'
 })
 
-const handleBuy = async () => {
-  await buyNFT({
-    tokenAddress: contractAddress.value,
-    tokenId: tokenId.value,
-  })
+const DEFAULTS: Record<string, { tokenAddress: string; tokenId: string }> = {
+  [polygon.id.toString()]: { tokenAddress: '0xf51a496d3e01d44d34fb177e23240ee2e3ed2e42', tokenId: '1' },
+  [mainnet.id.toString()]: { tokenAddress: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', tokenId: '4959' },
 }
+
+onMounted(async () => {
+  const key = (await getCurrentNetwork())?.toString() ?? mainnet.id.toString()
+  const { tokenAddress, tokenId } = DEFAULTS[key] ?? DEFAULTS[mainnet.id.toString()]
+
+  state.contractAddress = tokenAddress
+  state.tokenId = tokenId
+})
+
+const handleBuy = async () => buyNFT({
+  tokenAddress: state.contractAddress,
+  tokenId: state.tokenId
+})
 </script>
 
 <style scoped>

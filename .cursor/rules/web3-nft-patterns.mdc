@@ -1,0 +1,36 @@
+---
+globs: "src/composables/*.ts,src/components/*NFT*.vue"
+---
+
+# Web3 & NFT Patterns
+
+## Provider Setup
+```typescript
+if (!window.ethereum) return null
+const provider = new ethers.BrowserProvider(window.ethereum as any)
+const signer = await provider.getSigner()
+```
+
+## OpenSea SDK
+```typescript
+const chainMap = {
+  [mainnet.id.toString()]: Chain.Mainnet,
+  [polygon.id.toString()]: Chain.Polygon,
+}
+
+const sdk = new OpenSeaSDK(signer, {
+  chain: chainMap[chainId] ?? Chain.Mainnet,
+  apiKey: import.meta.env.VITE_OPENSEA_API_KEY,
+})
+```
+
+## NFT Purchase Flow
+1. Get order: `sdk.api.getOrder()`
+2. Fulfill order: `sdk.fulfillOrder()`
+3. Handle loading states and errors
+
+## Security
+- Check `window.ethereum` before operations
+- Validate addresses and token IDs
+- Use environment variables for API keys
+- Wrap Web3 calls in try-catch
